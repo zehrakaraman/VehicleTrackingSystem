@@ -9,11 +9,14 @@ export default function Login() {
 
     const [loginStatus, setLoginStatus] = useState("");
 
-    const login = () => {
-        Axios.post('http://localhost:3000/account', {
+    const login = (e) => {
+        e.preventDefault();
+        console.log("Logging in...");
+        Axios.post('http://localhost:5000/login', {
             username: username, 
             password: password
         }).then((response)=> {
+            console.log(`message: ${response.data.message}`);
             if (response.data.message) {
                 setLoginStatus(response.data.message)
             } else {
