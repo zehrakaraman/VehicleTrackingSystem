@@ -1,44 +1,31 @@
 import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '100vw',
+  height: '100vh'
 };
 
 const center = {
-  lat: -3.745,
-  lng: -38.523
+  lat: 41.008240,
+  lng: 28.978359
 };
 
 function MyComponent() {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyBQZ72NC1eWT9tCfUyc_OuAVKomQ5JSFlw"
+    googleMapsApiKey: "AIzaSyCydSwAy2RS-GYHWMLLvkOcS9dI1uDSyYE"
   })
-
-  const [map, setMap] = React.useState(null)
-
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
 
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
         zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
       >
-        { /* Child components, such as markers, info windows, etc. */ }
-        <></>
+        <Marker position={{ lat: 41.038284, lng: 28.970329 }} />
+        <Marker position={{ lat: 41.114071, lng: 29.021271 }} />
+        <Marker position={{ lat: 41.018944, lng: 29.057631 }} />
       </GoogleMap>
   ) : <></>
 }
