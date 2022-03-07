@@ -17,8 +17,10 @@ export default function Login() {
             password: password
         }).then((response)=> {
             console.log(`message: ${response.data.message}`);
-            if (response.data.message) {
-                setLoginStatus(response.data.message)
+            if (response.data.message == "Logged in successfully.") {
+                window.open('/map');
+            } else if (response.data.message == "Wrong username/password combination!")  {
+                setLoginStatus("Wrong username/password combination!");
             } else {
                 setLoginStatus(response.data[0].username)
             }
@@ -48,7 +50,7 @@ export default function Login() {
                         <p>Create an account</p>
                     </div>
                 </form>
-                <h1>{loginStatus}</h1>
+                <h2>{loginStatus}</h2>
             </div>
         </div>
     )
