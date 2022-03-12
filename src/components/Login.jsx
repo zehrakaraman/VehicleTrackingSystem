@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import Axios from 'axios';
 
 import loginImg from '../assets/login.jpg'
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const [loginStatus, setLoginStatus] = useState("");
+
+    const navigate = useNavigate();
 
     const login = (e) => {
         e.preventDefault();
@@ -18,7 +21,7 @@ export default function Login() {
         }).then((response)=> {
             console.log(`message: ${response.data.message}`);
             if (response.data.message == "Logged in successfully.") {
-                window.open('/map');
+                navigate("/map");
             } else if (response.data.message == "Wrong username/password combination!")  {
                 setLoginStatus("Wrong username/password combination!");
             } else {
