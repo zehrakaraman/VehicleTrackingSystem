@@ -1,7 +1,19 @@
 import React from 'react'
 import { GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 import db from '../Firebase.js'
-import GridTable from './GridTable'
+import styled from 'styled-components'
+
+const Container = styled.div`
+    background-color: black;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 const containerStyle = {
   width: '70vw',
@@ -32,14 +44,17 @@ export default function MyComponent() {
   })
 
   return isLoaded ? (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-      >
-        <Marker position={{ lat: 41.038284, lng: 28.970329 }} />
-        <Marker position={{ lat: 41.114071, lng: 29.021271 }} />
-        <Marker position={{ lat: 41.018944, lng: 29.057631 }} />
-      </GoogleMap>
-  ) : <></>
+      <Container>
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={10}
+        >
+          <Marker position={{ lat: 41.038284, lng: 28.970329 }} />
+          <Marker position={{ lat: 41.114071, lng: 29.021271 }} />
+          <Marker position={{ lat: 41.018944, lng: 29.057631 }} />
+        </GoogleMap>
+      </Container>
+    ) : <></>
+      
 }
