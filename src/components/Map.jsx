@@ -1,9 +1,10 @@
 import React from 'react'
 import { GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 import db from '../Firebase.js'
+import GridTable from './GridTable'
 
 const containerStyle = {
-  width: '100vw',
+  width: '70vw',
   height: '100vh'
 };
 
@@ -40,6 +41,5 @@ export default function MyComponent() {
         <Marker position={{ lat: 41.114071, lng: 29.021271 }} />
         <Marker position={{ lat: 41.018944, lng: 29.057631 }} />
       </GoogleMap>
-      
   ) : <></>
 }
