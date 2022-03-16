@@ -1,5 +1,8 @@
 import React, { useState } from 'react'; 
 import Axios from 'axios';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import AlertTitle from '@mui/material/AlertTitle';
 
 import loginImg from '../assets/login.jpg'
 import { useNavigate } from 'react-router-dom';
@@ -12,21 +15,28 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const login = (e) => {
+    var remainingEntry = 3;
+
+    const validate = (e) => {
         e.preventDefault();
         console.log("Logging in...");
         Axios.post('http://localhost:5000/login', {
             username: username, 
             password: password
-        }).then((response)=> {
-            console.log(`message: ${response.data.message}`);
-            if (response.data.message == "Logged in successfully.") {
-                navigate("/map");
-            } else if (response.data.message == "Wrong username/password combination!")  {
-                setLoginStatus("Wrong username/password combination!");
+        }).then((response) => {
+            //console.log(`message: ${response.data.message}`);
+            if (response.data.message == "Wrong username/password combination!") {
+                //setLoginStatus(response.data.message)
+                remainingEntry = remainingEntry - 1;
+                if (remainingEntry <= 0) {
+                    alert("VERIFICATION SCREEN..")
+                } else {
+                    alert(response.data.message);
+                } 
             } else {
-                setLoginStatus(response.data[0].username)
-            }
+                navigate("/dashboard");
+                console.log(response.data)
+            } 
         });
     };
 
@@ -47,13 +57,13 @@ export default function Login() {
                         <label>Password</label>
                         <input className='border p-2' type="password" onChange={(e)=> {setPassword(e.target.value)}}  />
                     </div>
-                    <button onClick={login} className='border w-full my-5 py-2 bg-gray-700 hover:bg-sky-800 text-white'>Sign In</button>
+                    <button onClick={validate} className='border w-full my-5 py-2 bg-gray-700 hover:bg-sky-800 text-white'>Sign In</button>
                     <div className='flex justify-between'>
                         <p className='flex items-center'><input className='mr-2' type="checkbox" /> Remember Me</p>
                         <p>Create an account</p>
                     </div>
                 </form>
-                <h2>{loginStatus}</h2>
+                <h2 className='text-1xl font-bold text-center py-6'>{loginStatus}</h2>
             </div>
         </div>
     )
