@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Map from "./components/Map";
 import GridTable from "./components/GridTable"
 import Dashboard from "./components/Dashboard"
+import Exit from "./components/Exit"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/map" element={<Map/>} />
         <Route path="/grid" element={<GridTable/>} />
         <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/exit" element={<Exit/>} />
       </Routes>
     </Router>
   );
