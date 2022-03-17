@@ -8,33 +8,49 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import styled from 'styled-components'
+import db from '../Firebase.js'
+
+import CloseIcon from '@mui/icons-material/Close';
+import { Button } from '@mui/material';
 
 
 const Container = styled.div`
     width: auto;
     margin-left: 65vw;
     position: relative;
-    padding: 0 4rem;
+    padding: 0 5rem;
 `
 
 const columns = [
   { id: 'no', label: 'Number', minWidth: 10 },
-  { id: 'vehicle', label: 'Vehicle\ID', minWidth: 100 },
+  { id: 'vehicle', label: 'Vehicle\ID', minWidth: 90 },
 ];
 
 function createData(no, vehicleID) {
   return { no, vehicleID };
 }
 
-const rows = [
-    createData("1", "VEHICLE-1"),
-    createData("2", "VEHICLE-2"),
-    createData("3", "VEHICLE-3"),
-    createData("4", "VEHICLE-4"),
-    createData("5", "VEHICLE-5"),
-  ];
+var newVehicle = 0
+
+const rows = [];
+
+const Fetchdata = async ()=>{
+  db.collection("vehicleInfo").get().then((querySnapshot) => {
+      querySnapshot.forEach(element => {
+          var data = element.data();
+          newVehicle = data.vehicleID;
+          rows.push(newVehicle)
+      });
+  })
+  console.log(rows)
+}
+
 
 export default function StickyHeadTable() {
+
+  Fetchdata();
+  
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -49,8 +65,8 @@ export default function StickyHeadTable() {
 
   return (
     <Container>
-      <Paper sx={{ width: '30vw', overflow: 'hidden' }}>
-        <TableContainer sx={{ height: '93vh'}}>
+      <Paper sx={{ width: '29vw', overflow: 'hidden' }}>
+        <TableContainer sx={{ height: '88vh'}}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
