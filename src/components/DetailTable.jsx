@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,11 +8,6 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import styled from 'styled-components'
-import db from '../Firebase.js'
-import Vehicle from '/Users/macbook/Desktop/Software Lab/vehicle-tracking-system/Frontend/src/models/Vehicle.js'
-
-import CloseIcon from '@mui/icons-material/Close';
-import { Button } from '@mui/material';
 
 const Container = styled.div`
     width: auto;

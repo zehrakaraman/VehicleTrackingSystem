@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,10 +10,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import styled from 'styled-components'
 import db from '../Firebase.js'
-import Vehicle from '/Users/macbook/Desktop/Software Lab/vehicle-tracking-system/Frontend/src/models/Vehicle.js'
 
-import CloseIcon from '@mui/icons-material/Close';
-import { Button } from '@mui/material';
+import VehicleLocation from '../models/VehicleLocation.js';
 
 const Container = styled.div`
     width: auto;
@@ -24,33 +22,26 @@ const Container = styled.div`
 
 const columns = [
   { id: 'no', label: 'Nu', minWidth: 10 },
-  { id: 'vehicle', label: 'Vehicle\ID', minWidth: 90 },
+  { id: 'vehicle', label: 'VehicleID', minWidth: 90 },
 ];
 
 var rows = [
   {no: "1", vehicle: "CAR-1"},
 ];
 
-const AllVehicles = []
+async function fetchData() {
+  const vehicleLocationsQuerySnapshot =
+      await db.collection("vehicle_locations").get()
+  const vehicleLocationDocs = vehicleLocationsQuerySnapshot.docs;
 
-async function Fetchdata() {
-  
-  //const datas = await db.collection("vehicle_locations").get()
-  //return datas
-  db.collection("vehicle_locations").get().then((querySnapshot) => {
-    querySnapshot.forEach(element => {
-      var data = element.data();
-      /*AllVehicles.forEach(item => {
-        if (item.id == data.vehicleID) {
-          item.locations.push({timestamp: data.timestamp, lat: data.lat, lng: data.lng})
-        } else {
-          const vehicle = new Vehicle(data.vehicleID, data.timestamp, data.lat, data.lng);
-          AllVehicles.push(vehicle)
-        }
-      })*/
-      AllVehicles.push(data)
-    });
-  })
+  const vehicleLocations = []
+  for (const vehicleLocationDoc of vehicleLocationDocs) {
+    const vehicleLocation =
+        VehicleLocation.fromQueryDocSnapshot(vehicleLocationDoc);
+    vehicleLocations.push(vehicleLocation);
+  }
+
+  return vehicleLocations;
 }
 
 //onClick={toggleDetails(row.no)}
@@ -58,6 +49,18 @@ export default function StickyHeadTable() {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  useEffect(() => {
+    fetchData().then((vehicleLocations) => {
+      vehicleLocations.forEach((vehicleLocation) => {
+        console.log("vehicleLocation.id", vehicleLocation.id);
+        console.log("vehicleLocation.timestamp", vehicleLocation.timestamp);
+        console.log("vehicleLocation.lat", vehicleLocation.lat);
+        console.log("vehicleLocation.lng", vehicleLocation.lng);
+        console.log("\n");
+      });
+    });
+  });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
