@@ -1,15 +1,15 @@
 import VehicleLocationsMap from './VehicleLocationsMap'
-import Grid from './VehiclesGridTable'
+import VehiclesGridTable from './VehiclesGridTable'
 import ExitButton from './ExitButton'
-import DetailList from './DetailTable'
+import VehicleLocationsTable from './DetailTable'
 
 export default function Dashboard() {
     return (
         <div>
             <VehicleLocationsMap />
             <ExitButton  />
-            <Grid />
-            <DetailList />
+            <VehiclesGridTable />
+            <VehicleLocationsTable />
         </div> 
         
     )

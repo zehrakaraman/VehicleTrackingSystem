@@ -25,7 +25,7 @@ const columns = [
     { id: 'lng', label: 'Longitude', minWidth: 30 },
 ];
 
-export default function DetailTable() {
+export default function VehicleLocationsTable() {
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
