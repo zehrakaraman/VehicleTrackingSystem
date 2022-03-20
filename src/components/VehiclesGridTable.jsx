@@ -78,33 +78,36 @@ export default function VehiclesGridTable({userID}) {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {vehicleIDs.map(
+                {/*vehicleIDs.map(
                   (vehicleID) => <TableCell key={vehicleID}>vehicleID</TableCell>)
-                }
-                {/* {columns.map((column) => (
+                */}
+                { columns.map((column) => (
                   <TableCell
                     key={column.id}
                     style={{ minWidth: column.minWidth }}
                   >
                     {column.label}
                   </TableCell>
-                ))} */}
+                ))} 
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {vehicleIDs
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((vehicleID) => {
                   return (
-                    <TableRow hover role="checkbox"  key={row.no} onClick={()=>{toggleDetails(row.no)}}>
-                      {columns.map((column) => {
+                    <TableRow hover role="checkbox"  key={vehicleID} onClick={()=>{toggleDetails(1)}}>
+                      {/*columns.map((column) => {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id}>
                             {value}
                           </TableCell>
                         )
-                      })}
+                      })*/}
+                      <TableCell key={vehicleID}>
+                          vehicleID
+                      </TableCell>
                     </TableRow>
                    
                   );
