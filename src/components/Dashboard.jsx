@@ -1,14 +1,13 @@
-import react from 'react'
-import Map from './Map'
-import Grid from './GridTable'
-import Exit from './Exit'
+import VehicleLocationsMap from './VehicleLocationsMap'
+import Grid from './VehiclesGridTable'
+import ExitButton from './ExitButton'
 import DetailList from './DetailTable'
 
 export default function Dashboard() {
     return (
         <div>
-            <Map />
-            <Exit  />
+            <VehicleLocationsMap />
+            <ExitButton  />
             <Grid />
             <DetailList />
         </div> 

@@ -1,10 +1,10 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import Login from "./components/Login";
-import Map from "./components/Map";
-import GridTable from "./components/GridTable"
+import Map from "./components/VehicleLocationsMap";
+import GridTable from "./components/VehiclesGridTable"
 import Dashboard from "./components/Dashboard"
-import Exit from "./components/Exit"
+import Exit from "./components/ExitButton"
 
 function App() {
   return (

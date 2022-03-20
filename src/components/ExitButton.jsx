@@ -10,7 +10,7 @@ const Container = styled.div`
     margin-left: 96vw;
     position: relative;
 `
-export default function Exit() {
+export default function ExitButton() {
     const navigate = useNavigate();
 
     //const currDate = new Date().toLocaleDateString();

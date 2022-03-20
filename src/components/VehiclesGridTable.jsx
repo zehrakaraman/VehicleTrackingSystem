@@ -44,8 +44,7 @@ async function fetchData() {
   return vehicleLocations;
 }
 
-//onClick={toggleDetails(row.no)}
-export default function StickyHeadTable() {
+export default function VehiclesGridTable() {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

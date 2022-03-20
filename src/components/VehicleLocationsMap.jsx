@@ -24,7 +24,7 @@ const center = {
   lng: 28.978359
 };
 
-export default function MyComponent() {
+export default function VehicleLocationsMap() {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
