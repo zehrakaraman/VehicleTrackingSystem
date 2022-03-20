@@ -29,37 +29,32 @@ var rows = [
   {no: "1", vehicle: "CAR-1"},
 ];
 
-async function fetchData() {
-  const vehicleLocationsQuerySnapshot =
-      await db.collection("vehicle_locations").get()
-  const vehicleLocationDocs = vehicleLocationsQuerySnapshot.docs;
+async function getVehicleIDs({userID}) {
+  console.log("getVehicleIDs");
+  const querySnapshot = await db.collection("vehicles")
+    .where("customerID", "==", userID)
+    .get();
 
-  const vehicleLocations = []
-  for (const vehicleLocationDoc of vehicleLocationDocs) {
-    const vehicleLocation =
-        VehicleLocation.fromQueryDocSnapshot(vehicleLocationDoc);
-    vehicleLocations.push(vehicleLocation);
+  const vehiclesIDs = []
+  for (const vehicleDoc of querySnapshot.docs) {
+    vehiclesIDs.push(vehicleDoc.id);
   }
 
-  return vehicleLocations;
+  return vehiclesIDs;
 }
 
-export default function VehiclesGridTable() {
+export default function VehiclesGridTable({userID}) {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  const [vehicleIDs, setVehicleIDs] = React.useState([]);
+
   useEffect(() => {
-    fetchData().then((vehicleLocations) => {
-      vehicleLocations.forEach((vehicleLocation) => {
-        console.log("vehicleLocation.id", vehicleLocation.id);
-        console.log("vehicleLocation.timestamp", vehicleLocation.timestamp);
-        console.log("vehicleLocation.lat", vehicleLocation.lat);
-        console.log("vehicleLocation.lng", vehicleLocation.lng);
-        console.log("\n");
-      });
+    getVehicleIDs({userID: userID}).then((vehicleIDs) => {
+      setVehicleIDs(vehicleIDs); 
     });
-  });
+  }, [userID]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

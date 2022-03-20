@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/map" element={<Map/>} />
         <Route path="/grid" element={<GridTable/>} />
-        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/dashboard/:userID" element={<Dashboard/>} />
         <Route path="/exit" element={<Exit/>} />
       </Routes>
     </Router>

@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 import styled from 'styled-components'
+import db from "../Firebase.js"
+import VehicleLocation from '../models/VehicleLocation';
 
 const Container = styled.div`
     background-color: black;
@@ -20,16 +22,51 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 41.008240,
-  lng: 28.978359
+  lat: 59.3293,
+  lng: 18.0686
 };
 
-export default function VehicleLocationsMap() {
-
+export default function VehicleLocationsMap({userID}) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyDB1rSYxqAvDggm56H-pttujodr6g1OiYw"
   })
+
+  useEffect(() => {
+    db.collection("vehicle_locations")
+        .where("customerID", "==", 1)
+        .onSnapshot(onVehicleLocations);
+  }, []);
+
+
+  const [vehicleLocations, setVehicleLocations] = useState([]);
+
+  function onVehicleLocations(querySnapshot) {
+    console.log("onVehicleLocations()");
+    const vehicleLocationDocs = querySnapshot.docs;
+    const vehicleLocations = []
+    for (const vehicleLocationDoc of vehicleLocationDocs) {
+      const vehicleLocation =
+          VehicleLocation.fromQueryDocSnapshot(vehicleLocationDoc);
+      vehicleLocations.push(vehicleLocation);
+    }
+
+    console.log("Setting vehicle locations...");
+    console.log("vehicleLocations.length: ", vehicleLocations.length);
+    setVehicleLocations(vehicleLocations);
+  }
+
+  function createMarkersFromVehicleLocations() {
+    console.log("createMarkersFromVehicleLocations()");
+    return vehicleLocations.map(
+      (vehicleLocation) => {
+        return <Marker
+          key={vehicleLocation.id}
+          position={{lat: vehicleLocation.lat, lng: vehicleLocation.lng}}
+        />
+      }
+    );
+  }
 
   return isLoaded ? (
       <Container>
@@ -41,9 +78,9 @@ export default function VehicleLocationsMap() {
           <Marker position={{ lat: 41.038284, lng: 28.970329 }} />
           <Marker position={{ lat: 41.114071, lng: 29.021271 }} />
           <Marker position={{ lat: 41.018944, lng: 29.057631 }} />
+          {createMarkersFromVehicleLocations()}
         </GoogleMap>
       </Container>
     ) : <></>
 }
 
-//export default React.memo(MyComponent)

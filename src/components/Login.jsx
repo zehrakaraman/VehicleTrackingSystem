@@ -1,8 +1,5 @@
 import React, { useState } from 'react'; 
 import Axios from 'axios';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import AlertTitle from '@mui/material/AlertTitle';
 
 import loginImg from '../assets/login.jpg'
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +8,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [loginStatus, setLoginStatus] = useState("");
+    const [loginStatus] = useState("");
 
     const navigate = useNavigate();
 
@@ -26,19 +23,16 @@ export default function Login() {
             username: username, 
             password: password
         }).then((response) => {
-            //console.log(`message: ${response.data.message}`);
-            if (response.data.message == "Wrong username/password combination!") {
-                //setLoginStatus(response.data.message)
+            if (response.data.message === "Wrong username/password combination!") {
                 remainingEntry = remainingEntry - 1;
                 if (remainingEntry <= 0) {
-                    //alert("VERIFICATION SCREEN..")
                     block = true;
                 } else {
                     alert(response.data.message);
                 } 
             } else {
-                navigate("/dashboard");
-                //console.log(response.data)
+                const userID = response.data.userID;
+                navigate(`/dashboard/${userID}`);
             } 
         });
     };
@@ -54,7 +48,7 @@ export default function Login() {
                     <h2 className='text-4xl font-bold text-center py-6'>VEHICLE TRACKING SYSTEM.</h2>
                     <div className='flex flex-col py-2'>
                         <label>Username</label>
-                        <input disabled={true} disabled={false} className='border p-2' type="text" onChange={(e)=> {setUsername(e.target.value)}} />
+                        <input disabled={false} className='border p-2' type="text" onChange={(e)=> {setUsername(e.target.value)}} />
                     </div>
                     <div className='flex flex-col py-2'>
                         <label>Password</label>
