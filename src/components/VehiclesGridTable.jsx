@@ -21,7 +21,6 @@ const Container = styled.div`
 `
 
 const columns = [
-  { id: 'no', label: 'Nu', minWidth: 10 },
   { id: 'vehicle', label: 'VehicleID', minWidth: 90 },
 ];
 
@@ -106,7 +105,7 @@ export default function VehiclesGridTable({userID}) {
                         )
                       })*/}
                       <TableCell key={vehicleID}>
-                          vehicleID
+                          {vehicleID}
                       </TableCell>
                     </TableRow>
                    
