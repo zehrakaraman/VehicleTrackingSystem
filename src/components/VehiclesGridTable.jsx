@@ -30,9 +30,10 @@ var rows = [
 ];
 
 async function getVehicleIDs({userID}) {
+  const userIDAsNumber = parseInt(userID);
   console.log("getVehicleIDs");
   const querySnapshot = await db.collection("vehicles")
-    .where("customerID", "==", userID)
+    .where("customerID", "==", parseInt(userIDAsNumber))
     .get();
 
   const vehiclesIDs = []
@@ -52,6 +53,7 @@ export default function VehiclesGridTable({userID}) {
 
   useEffect(() => {
     getVehicleIDs({userID: userID}).then((vehicleIDs) => {
+      console.log("vehicleIDs: ", vehicleIDs.length);
       setVehicleIDs(vehicleIDs); 
     });
   }, [userID]);
@@ -76,14 +78,17 @@ export default function VehiclesGridTable({userID}) {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {vehicleIDs.map(
+                  (vehicleID) => <TableCell key={vehicleID}>vehicleID</TableCell>)
+                }
+                {/* {columns.map((column) => (
                   <TableCell
                     key={column.id}
                     style={{ minWidth: column.minWidth }}
                   >
                     {column.label}
                   </TableCell>
-                ))}
+                ))} */}
               </TableRow>
             </TableHead>
             <TableBody>

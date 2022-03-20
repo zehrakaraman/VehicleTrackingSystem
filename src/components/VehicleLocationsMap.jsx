@@ -33,8 +33,9 @@ export default function VehicleLocationsMap({userID}) {
   })
 
   useEffect(() => {
+    const userIDAsNumber = parseInt(userID);
     db.collection("vehicle_locations")
-        .where("customerID", "==", 1)
+        .where("customerID", "==", userIDAsNumber)
         .onSnapshot(onVehicleLocations);
   }, []);
 
